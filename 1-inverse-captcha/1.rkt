@@ -18,6 +18,8 @@
   )
   )
   
-  
+(define input (read-line))
+(define convertedInput (map (lambda (x) (- (char->integer x) 48)) (string->list input)))
+(define circularConvertedInput  (list* (last convertedInput) convertedInput))
 
-(captcha 0 (string->list "1122"))
+(captcha 0 circularConvertedInput)
