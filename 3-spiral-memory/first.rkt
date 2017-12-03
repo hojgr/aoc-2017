@@ -21,15 +21,19 @@
 
     (define next-number (+ number 1))
     
-    (cond
-      [(and right? top?)   (point level (- x 1) y next-number)]
-      [(and left? top?)  (point level x (- y 1) next-number)]
-      [(and left? bottom?) (point level (+ x 1) y next-number)]
-      [(and right? bottom? (point (+ level 1) (+ x 1) y next-number))] ; same as left? bottom? but for good measure
-      [right?  (point level x (+ y 1) next-number)]
-      [top?    (point level (- x 1) y next-number)]
-      [left?   (point level x (- y 1) next-number)]
-      [bottom? (point level (+ x 1) y next-number)])))
+    (define recalculated-level (if (and right? bottom?) (+ level 1) level))
+    
+    (match-let ([(cons new-x new-y) (cond
+                                        [(and right? top?)   (cons (- x 1) y)]
+                                        [(and left? top?)  (cons x (- y 1))]
+                                        [(and left? bottom?) (cons (+ x 1) y)]
+                                        [(and right? bottom? (cons (+ x 1) y))] ; same as left? bottom? but for good measure
+                                        [right?  (cons x (+ y 1))]
+                                        [top?    (cons (- x 1) y)]
+                                        [left?   (cons x (- y 1))]
+                                        [bottom? (cons (+ x 1) y)])])
+
+      (point recalculated-level new-x new-y next-number))))
     
 
 (define (get-side-length level)
