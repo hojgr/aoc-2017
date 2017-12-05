@@ -41,5 +41,3 @@
     [_ #f]))
 
 (process-line)
-
-;(is-anagram "xwosiah" "ihw")
